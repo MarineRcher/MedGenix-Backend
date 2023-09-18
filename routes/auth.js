@@ -37,22 +37,19 @@ router.post(
 );
 
 module.exports = router;
-
-
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => { 
   try {
     const { email, password } = req.body;
-console.log(email);
-    const logUser = await login({
-      email,
-      password,
-    });
 
-    if (logUser.error) {
-      return res.status(401).json({ error: logUser.error });
+    if (!email || !password) {
+      return res.status(400).json({ error: "Invalid login data" });
     }
 
-    // Vous pouvez ajouter le code pour générer et envoyer un jeton JWT ici pour l'authentification réussie.
+    const logUser = await login(req, res, next);
+  
+    if (!logUser) {
+      return res.status(401).json({ error: "Login failed" });
+    }
 
     res.status(200).json({ message: "Logged in!", user: logUser });
   } catch (error) {
@@ -60,5 +57,6 @@ console.log(email);
     res.status(500).json({ error: "Login failed" });
   }
 });
+
 
 module.exports = router;

@@ -37,8 +37,10 @@ exports.login = async (req, res, next) => {
   const password = req.body.password;
 
   try {
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-
+    const rows = [];
+    rows = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    
+    
     if (rows.length === 0) {
       const error = new Error("A user with this email could not be found.");
       error.statusCode = 401;

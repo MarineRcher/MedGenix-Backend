@@ -1,5 +1,7 @@
-const { pool } = require('../db'); 
+const { pool } = require('../db');
 const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
+
 const createUser = async (user) => {
   try {
     const { firstName, lastName, email, password, ID_project, role } = user;
@@ -9,14 +11,14 @@ const createUser = async (user) => {
     throw error;
   }
 };
-const login = async (req, res, next, logUser) => {
-  
-  const {email, password } = logUser;
-  
-  console.log(email);
-  try {
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
+const login = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const rows = await pool.query('SELECT * FROM users WHERE email=?;', [email]);
+   
     if (rows.length === 0) {
       const error = new Error("A user with this email could not be found.");
       error.statusCode = 401;
@@ -24,7 +26,7 @@ const login = async (req, res, next, logUser) => {
     }
 
     const user = rows[0];
-
+console.log(user);
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -36,13 +38,13 @@ const login = async (req, res, next, logUser) => {
     const token = jwt.sign(
       {
         email: user.email,
-        userId: user.id.toString(),
+        userId: user.ID_user.toString(),
       },
       process.env.JWT_SECRET, // Assurez-vous de configurer cette clé JWT correctement
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token: token, userId: user.id.toString() });
+    res.status(200).json({ token: token, userId: user.ID_user.toString() });
   } catch (error) {
     console.error(error);
     if (!error.statusCode) {
@@ -51,7 +53,5 @@ const login = async (req, res, next, logUser) => {
     next(error);
   }
 };
-
-
 
 module.exports = { createUser, login };
