@@ -2,28 +2,28 @@ const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
 
-const addDocument = require('../controller/calendar'); 
+const addEvent = require('../controller/calendar'); 
 const router = express.Router();
 
 router.post(
-  "/addDocument",
+  "/addEvent",
   [
   ],
   async (req, res) => {
     try {
-      const { name, content, start, end, ID_user, status } = req.body;
+      const { date, event, ID_user } = req.body;
       
-      const projectid = await createProject({
+      const eventid = await addEvent({
         date,
-        content,
-        start,
+        event,
+        ID_user,
       });
 
-      res.status(201).json({ message: "Project created!", projectid: projectid.toString() });
+      res.status(201).json({ message: "Evènement crée!", eventid: eventid.toString() });
 
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Error creating project" });
+      res.status(500).json({ error: "Erreur lors de la création de l'évènement" });
     }
   }
 );

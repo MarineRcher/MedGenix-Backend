@@ -22,11 +22,11 @@ router.post(
         status,
       });
 
-      res.status(201).json({ message: "Project created!", projectid: projectid.toString() });
+      res.status(201).json({ message: "Projet crée!", projectid: projectid.toString() });
 
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Error creating project" });
+      res.status(500).json({ error: "Errreur lors de la création du projet" });
     }
   }
 );

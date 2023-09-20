@@ -2,9 +2,9 @@ const { pool } = require('../db');
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 
-const addDocument = async (document) => {
+const addEvent = async (eventadd) => {
   try {
-    const { date, event, ID_user } = document;
+    const { date, event, ID_user } = eventadd;
     const result = await pool.query('INSERT INTO Calendar (date, event, ID_user) VALUES (?, ?, ?);', [date, event, ID_user]);
     return result.insertId;
   } catch (error) {
@@ -12,4 +12,4 @@ const addDocument = async (document) => {
   }
 };
 
-module.exports = addDocument;
+module.exports = addEvent;
