@@ -12,4 +12,16 @@ const createProject = async (project) => {
   }
 };
 
-module.exports = createProject;
+const getProjectByUserId = async (ID_user) => {
+  try {
+    const result = await pool.query('SELECT * FROM projects WHERE ID_user = ?;', [ID_user]);
+   return result.rows;
+
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+    throw error; 
+  }
+};
+
+module.exports = { createProject, getProjectByUserId };

@@ -2,11 +2,11 @@ const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
 
-const addDocument = require('../controller/projects'); 
+const addDocument = require('../controller/documents'); 
 const router = express.Router();
 
 router.post(
-  "/addProject",
+  "/addDocument",
   [
   ],
   async (req, res) => {

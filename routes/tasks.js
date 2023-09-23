@@ -6,7 +6,7 @@ const addTask = require('../controller/projects');
 const router = express.Router();
 
 router.post(
-  "/addProject",
+  "/addTask",
   [
   ],
   async (req, res) => {
@@ -19,13 +19,15 @@ router.post(
         state,
       });
 
-      res.status(201).json({ message: "Project created!", taskId: taskId.toString() });
+      res.status(201).json({ message: "Tâche ajoutée!", taskId: taskId.toString() });
 
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Error creating project" });
+      res.status(500).json({ error: "Erreur lors de l'ajout de la tâche" });
     }
   }
 );
+
+
 
 module.exports = router;
