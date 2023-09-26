@@ -40,7 +40,7 @@ console.log(user);
         email: user.email,
         userId: user.ID_user.toString(),
       },
-      process.env.JWT_SECRET, // Assurez-vous de configurer cette clé JWT correctement
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 

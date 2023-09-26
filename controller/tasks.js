@@ -12,14 +12,15 @@ const addTask = async (task) => {
   }
 };
 
-const getTaskByStatus = async (statue) => {
+const getTaskByStatus = async (state, ID_project) => {
   try {
-  const result = await pool.query('SELECT * FROM projects WHERE status = ?;', [statue]);
-  return result.insertTask;
-} catch (error) {
-  throw error;
-}
+    const result = await pool.query('SELECT * FROM tasks WHERE state = ? and ID_project= ? ;', [state, ID_project]);
 
+    console.log(result);
+  } catch (error) {
+    throw error;
+
+  }
 }
 
 module.exports = {addTask, getTaskByStatus};

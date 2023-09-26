@@ -3,8 +3,9 @@ const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
 
 const addTask = require('../controller/tasks'); 
-const getTaskByStatus = require('../controller/tasks');
+const {getTaskByStatus} = require('../controller/tasks');
 const router = express.Router();
+
 
 router.post(
   "/addTask",
@@ -31,19 +32,15 @@ router.post(
 
 router.get(
   "/getTask",
-  [
-
-  ],
-  async ( res) => {
+  async (res, statue, state) => {
     try {
 
-      const task = await getTaskByStatus({
+      const task = await getTaskByStatus({state});
 
-      });
-      res.status(201).json({ message: "Tâche ajoutée!", task: task.toString() });
+      statue.status(201).json({ message: "Tâche!", task: task?.toString() });
     }  catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Erreur lors de l'ajout de la tâche" });
+      statue.status(500).json({ error: "Erreur" });
     }
   }
 )
