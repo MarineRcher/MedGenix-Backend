@@ -1,6 +1,7 @@
 const { pool } = require('../db');
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 const createUser = async (user) => {
   try {
@@ -26,7 +27,7 @@ const login = async (req, res, next) => {
     }
 
     const user = rows[0];
-console.log(user);
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {

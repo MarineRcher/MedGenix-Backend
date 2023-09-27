@@ -31,20 +31,21 @@ router.post(
 );
 
 router.get(
-  "/getTask",
-  async (req, res, next) => {
-    try {
-      const { state } = req.query;
-      const task = await getTaskByStatus(state);
+    "/getTask",
+    async (req, res, next) => {
+      try {
+        const { state, ID_project } = req.query;
+        const task = await getTaskByStatus({ state, ID_project });
 
-      res.status(200).json({ message: "Tâche!", task: task?.toString() });
-    }  catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Erreur" });
+        res.status(200).json({ message: "Tâche!", task: task?.toString() });
+      }  catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur" });
+      }
+
+      next();
     }
-  }
 );
-
 
 
 

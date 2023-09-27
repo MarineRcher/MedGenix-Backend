@@ -19,6 +19,7 @@
     "javascript-stringify": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.2.1",
+    "pnpm": "^8.8.0",
     "sequelize": "^6.33.0",
     "stringify": "^5.2.0"
   },

@@ -21,6 +21,9 @@ const getTaskByStatus = async ({ state, ID_project }) => {
   } catch (error) {
     throw error;
   }
+
+
 }
+
 
 module.exports = {addTask, getTaskByStatus};
