@@ -12,14 +12,14 @@ const addTask = async (task) => {
   }
 };
 
-const getTaskByStatus = async (state, ID_project) => {
+const getTaskByStatus = async ({ state, ID_project }) => {
   try {
     const result = await pool.query('SELECT * FROM tasks WHERE state = ? and ID_project= ? ;', [state, ID_project]);
 
     console.log(result);
+    return result;
   } catch (error) {
     throw error;
-
   }
 }
 
