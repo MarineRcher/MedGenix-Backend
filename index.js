@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 //import routes
 const userRoutes = require("./routes/auth");
 const projectRoute = require("./routes/projects");
-const documentsRoute = require("./routes/documents");
 const tasksRoute = require("./routes/tasks");
 
 app.use((req, res, next) => {
@@ -22,10 +21,10 @@ app.use((req, res, next) => {
 // connexion à la base de donnée
 app.use("/auth", userRoutes);
 app.use("/project", projectRoute);
-app.use("/documents", documentsRoute);
 app.use("/tasks", tasksRoute);
 
 
 app.listen(3003, () => {
+
   console.log(`app is listening on port ${port}`);
 });

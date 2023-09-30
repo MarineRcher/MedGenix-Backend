@@ -2,8 +2,8 @@ const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
 
-const createProject = require('../controller/projects'); 
-const {getProjectByUserId} = require('../controller/projects'); 
+const {createProject} = require('../controller/projects');
+const {getProjectByUserId} = require('../controller/projects');
 const router = express.Router();
 
 router.post(
@@ -33,14 +33,20 @@ router.post(
 );
 module.exports = router;
 
-router.get("/projectUser/:userID", async (req, res) => {
-  try {
-    const ID_user = req.params.ID_user;
-    const projects = await getProjectByUserId(req, res,ID_user);
-    res.json(projects);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur lors de la récupération des projets de l'utilisateur" });
-  }
-});
+router.get(
+    "/projectUser",
+    async (req, res, next) => {
+      try {
+        const ID_user  = req.query;
+        const project = await getProjectByUserId(ID_user );
+
+        res.status(200).json({ message: "Project!", project: project?.toString() });
+      }  catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur" });
+      }
+
+      next();
+    }
+);
 module.exports = router;

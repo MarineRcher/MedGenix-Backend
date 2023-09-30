@@ -3,8 +3,8 @@
 const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
-
-const createUser = require('../controller/user'); 
+const bcrypt = require("bcrypt");
+const {createUser} = require('../controller/user');
 const router = express.Router();
 const {login } = require("../controller/user")
 

@@ -34,8 +34,8 @@ router.get(
     "/getTask",
     async (req, res, next) => {
       try {
-        const { state, ID_project } = req.query;
-        const task = await getTaskByStatus({ state, ID_project });
+
+        const task = await getTaskByStatus();
 
         res.status(200).json({ message: "Tâche!", task: task?.toString() });
       }  catch (error) {
