@@ -2,7 +2,7 @@ const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
 
-const addTask = require('../controller/tasks'); 
+const {addTask} = require('../controller/tasks');
 const {getTaskByStatus} = require('../controller/tasks');
 const router = express.Router();
 
@@ -33,19 +33,19 @@ router.post(
 router.get(
     "/getTask",
     async (req, res, next) => {
-      try {
+        try {
+            const task = await getTaskByStatus();
 
-        const task = await getTaskByStatus();
+            res.status(200).json({ message: "Tâche trouvée!", task });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Erreur" });
+        }
 
-        res.status(200).json({ message: "Tâche!", task: task?.toString() });
-      }  catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Erreur" });
-      }
-
-      next();
+        next();
     }
 );
+
 
 
 

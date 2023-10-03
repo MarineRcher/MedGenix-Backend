@@ -1,5 +1,5 @@
 const { pool } = require('../db');
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
 const createProject = async (project) => {

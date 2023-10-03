@@ -1,5 +1,5 @@
 const { pool } = require('../db');
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
@@ -19,7 +19,7 @@ const login = async (req, res, next) => {
 
   try {
     const rows = await pool.query('SELECT * FROM users WHERE email=?;', [email]);
-   
+
     if (rows.length === 0) {
       const error = new Error("A user with this email could not be found.");
       error.statusCode = 401;
@@ -37,15 +37,15 @@ const login = async (req, res, next) => {
     }
 
     const token = jwt.sign(
-      {
-        email: user.email,
-        userId: user.ID_user.toString(),
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+        {
+          email: user.email,
+          userId: user.ID_user.toString(),
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token: token, userId: user.ID_user.toString() });
+    return { token: token, userId: user.ID_user.toString() };
   } catch (error) {
     console.error(error);
     if (!error.statusCode) {

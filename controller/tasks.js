@@ -1,5 +1,5 @@
 const { pool } = require('../db');
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
 const addTask = async (task) => {
@@ -12,15 +12,14 @@ const addTask = async (task) => {
   }
 };
 
-const getTaskByStatus = async () => {
-  try {
-    const result = await pool.query('SELECT * FROM tasks;');
-    console.log(result[0]);
-    return result[0];
-  } catch (error) {
-    throw error;
-  }
-};
+  const getTaskByStatus = async () => {
+    try {
+      const result = await pool.query('SELECT * FROM tasks;');
+      return JSON.stringify(result);
+    } catch (error) {
+      throw error;
+    }
+  };
 
 
 module.exports = {addTask, getTaskByStatus};

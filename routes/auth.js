@@ -3,7 +3,7 @@
 const express = require("express");
 const { body } = require("express-validator");
 const { validationResult } = require("express-validator");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const {createUser} = require('../controller/user');
 const router = express.Router();
 const {login } = require("../controller/user")
@@ -46,7 +46,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const logUser = await login(req, res, next);
-  
+
     if (!logUser) {
       return res.status(401).json({ error: "Login failed" });
     }
